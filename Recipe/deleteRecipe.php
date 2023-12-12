@@ -1,0 +1,129 @@
+<html>
+<head>
+<title> Delete Recipes </title>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+<style>
+
+*{
+background-color:#6D8B74;
+}
+body{
+background-color: #6D8B74;
+}
+.header{
+padding-left: 450px;
+color: #5F7161;
+
+}
+.cont h1{
+	font-family: none;
+	font-weight: 500px;
+	font-size: 95px;
+	padding-left: 0;
+	padding-right: 400px;
+	padding-bottom: 20px;
+}
+li, a{
+	font-weight: 500px;
+	font-size: 12px;
+	color: white;
+	text-decoration: none;
+}
+.navlinks{
+	list-style: none;
+	padding-bottom: 0px;
+	padding-right: 0;
+	padding-left: 50px;
+}
+.navlinks li{
+	display: inline-block;
+	text-align: center;
+	padding: 10px 50px;
+	padding-left: 0px;
+}
+.navlinks li a{
+	transition: all  0.4s ease 0s;
+}
+.navlinks li a:hover{
+	color: #D0C9C0;
+	
+}
+.cont{
+	padding-left: 45px;
+}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="cont">
+		<h1>Recipe Corner</h1>
+	</div>
+	<nav>
+		<ul class= "navlinks">
+            <li><a href="home.php">Home page</a></li>
+			<li><a href="addRecipe.php">Add recipe</a></li>
+			<li><a href="editRecipes.php">Edit Recipe</a></li>
+			<li><a href="deleteRecipe.php">Delete Recipe</a></li>
+			<li><a href="viewRecipes.php">View Recipes</a></li>
+		</ul>
+		</nav>
+		</div>
+		<div class="container">
+	<div class="row justify-content-center">
+		<div>
+		<h4 class="text-center text-dark">View All Recipes</h4>
+ <hr>
+ <table class="table table-bordered table-striped table-hover">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Recipe Name</th>
+<th>Recipe Description</th>
+<th>Recipe Ingredients</th>
+<th>Recipe Directions</th>
+<th>Operations</th>
+</tr>
+<?php
+include("connection.php");
+$query = "select * from recipe_info";
+$data = mysqli_query($conn, $query);
+$total = mysqli_num_rows($data);
+if($total!=0)
+{
+	while($result = mysqli_fetch_assoc($data))
+{
+	echo "
+	<tr>
+	<td>".$result['id']."</td>
+	<td>".$result['name']."</td>
+	<td>".$result['recipe_name']."</td>
+	<td>".$result['recipe_description']."</td>
+	<td>".$result['recipe_ingredients']."</td>
+	<td>".$result['recipe_instructions']."</td>
+	<td><a href = 'delete.php? rn=$result[id]'>Delete</td>
+	</tr>
+	";
+	}	
+}
+else
+{
+echo "No records found";	
+}
+?>
+</table>
+<script type="text/javascript">
+ $(document).ready(function(){
+ $('table').DataTable({
+});
+ });
+ </script>
+</body>
+</html>
+<?php
+include("footer.php");
+?>
